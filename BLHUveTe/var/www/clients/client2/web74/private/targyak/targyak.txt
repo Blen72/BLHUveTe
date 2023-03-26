@@ -1,0 +1,152 @@
+ELOL;Elméleti lol;SAJT;0;1;0;0;0;0;
+ELOLA;Elméleti Lola Olimpiai Lovazás Alapjai;SAJT;0;1;0;0;0;0;ELOL
+ELOLAL;Elméleti LÓ LAL;SAJT;0;1;0;0;0;0;#ETF,ELOLA
+#ETF;Elméleti tudásfelmérő;EPTIT;0;-1;0;0;0;0;
+
+EKALÁ I.;Elméleti kalkulátorok I.;EPTIT;0;1;2;2;2;2;#ETF
+EPEKÖ;Elméleti programozás elméleti következményei;EPTIT;0;1;1;0;2;0;#ETF
+EH;Elméleti hierarchia;EPTIT;0;1;1;1;1;2;#ETF
+ESZHA;Elméleti számítógéphasználat;EPTIT;0;1;1;1;2;1;#ETF
+EVN;Elméleti változó névadás;EPTIT;0;1;1;1;2;1;#ETF
+EGA I.;Elméleti gondolkodás architektúra I.;EPTIT;0;1;1;1;2;1;#ETF
+EPA I.;Elméleti programozás alapjai I.;EPTIT;0;1;3;3;1;3;#ETF
+EDM I.;Elméleti diszkrét matematika I.;EPTIT;0;1;1;1;2;2;#ETF
+EK I.;Elméleti kalkulus I.;EPTIT;0;1;1;1;2;2;#ETF
+ESZHÁ I.;Elméleti számítógépes hálózatok I.;EPTIT;0;1;1;1;1;2;#ETF
+
+EKALÁ II.;Elméleti kalkulátorok II.;EPTIT;0;2;1;1;2;2;EKALÁ I.
+ERECT;Elméleti rendszerek elméleti célú tanulmányozása;EPTIT;0;2;1;1;-1;-1;EGA I.
+ESZÁM;Elméleti számítás;EPTIT;0;2;1;1;-1;-1;EKALÁ I.,EDM I.
+EPA II.;Elméleti programozás alapjai II.;EPTIT;0;2;2;2;-1;-1;EPA I.,ESZHA,EPEKÖ,EVN
+EOPK;Elméleti operációkutatás;EPTIT;0;2;1;1;-1;-1;EDM I.,EKALÁ I.
+ESZA;Elméleti sztochasztika alapjai;EPTIT;0;2;1;1;-1;-1;EK I.
+EOPR;Elméleti operációs rendszerek;EPTIT;0;2;1;1;-1;-1;EGA I.
+EL I.;Elméleti logika I.;EPTIT;0;2;2;2;-1;-1;EDM I.,EVN
+EWT;Elméleti web tervezés;EPTIT;0;2;1;1;-1;-1;ESZHA
+
+ESZR I.;Elméleti számrendszerek I.;EPTIT;0;3;2;2;-1;-1;ERECT,EKALÁ II.,ESZÁM
+ESÖ;Elméleti sorozatok összegzése;EPTIT;0;3;1;1;-1;-1;EKALÁ II.,ESZÁM
+EPA III.;Elméleti programozás alapjai III.;EPTIT;0;3;1;1;-1;-1;EPA II.
+ELP;Elméleti logikai programozás;EPTIT;0;3;1;2;-1;-1;EL I.,EOPR,EPA II.
+EKSZSZ;Elméleti közelítő és szimbolikus számítások;EPTIT;0;3;1;1;-1;-1;EDM I.,ESZÁM
+EAS;Elméleti alkalmazott statisztika;EPTIT;0;3;1;1;-1;-1;ESZA
+EA;Elméleti adatbázisok;EPTIT;0;3;1;1;-1;-1;EDM I.,EPA I.
+EAA I.;Elméleti algoritmusok és adatszerkezetek I.;EPTIT;0;3;1;1;-1;-1;#ETF
+ERF I.;Elméleti rendszerfejlesztés I.;EPTIT;0;3;1;1;-1;-1;EOPR,EPA II.
+
+ESZR II.;Elméleti számrendszerek II.;EPTIT;0;4;1;1;-1;-1;ESZR I.
+EKALÁ III.;Elméleti kalkulátorok III.;EPTIT;0;4;1;1;-1;-1;ESZR I.,EKSZSZ
+ECIGI;Elméleti cégek igazgatóinak gazdasági ismeretei;EPTIT;0;4;1;0;-1;-1;EKSZSZ,EAS,EA
+ETI;Elméleti természetes intelligencia;EPTIT;0;4;1;1;-1;-1;ELP,EPA III.,ESÖ
+ESZMPSA I.;Elméleti számtani és mértani programozás statisztika alapjai I.;EPTIT;0;4;1;1;-1;-1;ESÖ,EKSZSZ,ESZA
+EGA II.;Elméleti gondolkodás architektúra II.;EPTIT;0;4;1;1;-1;-1;EGA I.,EAS
+EP I.;Elméleti programozás I.;EPTIT;0;4;3;3;-1;-1;ELP,EPA III.,ERF I.
+EFNY;Elméleti formális nyelvek;EPTIT;0;4;1;1;-1;-1;EDM I.
+EPNY I.;Elméleti programozási nyelvek I.;EPTIT;0;4;1;1;-1;-1;EPA III.,ERF I.
+
+EKALÁ IV.;Elméleti kalkulátorok IV.;EPTIT;0;5;1;1;-1;-1;ESZMPSA I.,EKALÁ III.
+EKVASZARA;Elméleti kvantumszámítógép architektúra alapjai;EPTIT;0;5;1;0;-1;-1;EGA II.,ESZR II.
+EKI;Elméleti kinetikai ismeret;EPTIT;0;5;1;1;-1;-1;EKALÁ III.
+EALANS;Elméleti alkalmazattlan statisztika;EPTIT;0;5;2;1;-1;-1;ECIGI
+EPNY II.;Elméleti programozási nyelvek II.;EPTIT;0;5;1;1;-1;-1;EFNY,EPNY I.
+EAA II.;Elméleti algoritmusok és adatszerkezetek II.;EPTIT;0;5;1;1;-1;-1;EAA I.
+ERF II.;Elméleti rendszerfejlesztés II.;EPTIT;0;5;1;1;-1;-1;ERF I.
+EP II.;Elméleti programozás II.;EPTIT;0;5;2;2;-1;-1;EP I.
+EB I.;Elméleti bonyolultságelmélet I.;EPTIT;0;5;2;1;-1;-1;EGA II.,EL I.,ETI
+EMI I.;Elméleti mesterséges intelligencia I.;EPTIT;0;5;1;1;-1;-1;EGA II.,EP I.,ETI
+
+ESZKALÁTOR I.;Elméleti számrendszer kalkulátorok I.;EPTIT;0;6;2;2;-1;-1;ESZR II.,EKALÁ IV.
+EB II.;Elméleti bonyolultságelmélet II.;EPTIT;0;6;1;1;-1;-1;EALANS,EB I.,EMI I.
+EPNY III.;Elméleti programozási nyelvek III.;EPTIT;0;6;1;1;-1;-1;EPNY II.
+ES I.;Elméleti statisztika I.;EPTIT;0;6;1;1;-1;-1;EALANS
+ER;Elméleti rekurziók;EPTIT;0;6;1;1;-1;-1;EP I.,EAA II.
+EBAHIA;Elméleti billentyűzet aritmetika és hardverismeret alapjai;EPTIT;0;6;1;0;-1;-1;EKVASZARA
+EM I.;Elméleti matematika I.;EPTIT;0;6;1;1;-1;-1;EB I.,EKALÁ IV.
+ESZJ;Elméleti számítógépes játékok;EPTIT;0;6;1;0;-1;-1;EMI I.,EP II.,EKI
+EBECSA;Elméleti becslés alapjai;EPTIT;0;6;1;1;-1;-1;#ETF
+EDSZK;Elméleti diplomaszerzés következményei;EPTIT;0;6;1;0;-1;-1;#ETF
+EKVASZAR I.;Elméleti kvantumszámítógép architektúra I.;EPTIT;0;6;2;0;-1;-1;EKVASZARA
+ELBASZ;Elméleti bináris algebrai számítások;EPTIT;0;6;1;1;-1;-1;ESZR II.,EKALÁ IV.
+EL II.;Elméleti logika II.;EPTIT;0;6;2;1;-1;-1;EGA II.,EL I.
+EP III.;Elméleti programozás III.;EPTIT;0;6;1;1;-1;-1;EP II.
+EDKF;Elméleti digitális képfeldolgozás;EPTIT;0;6;1;1;-1;-1;EAA II.
+EIB;Elméleti információbiztonság;EPTIT;0;6;1;1;-1;-1;ESZHÁ I.,ERF II.
+
+EKVASZAR II.;Elméleti kvantumszámítógép architektúra II.;EPTIT;0;7;1;0;-1;-1;EKVASZAR I.
+EM II.;Elméleti matematika II.;EPTIT;0;7;1;1;-1;-1;EM I.,ELBASZ
+EBECS I.;Elméleti becslések I.;EPTIT;0;7;1;1;-1;-1;EBECSA
+ELISMERÉS;Elméleti ismeret értelmezés;EPTIT;0;7;1;1;-1;-1;EDSZK,EBHAIA
+EBLLAN;Elméleti bevezetés a logikátlanságba;EPTIT;0;7;2;1;-1;-1;EL II.,EB II.
+EPVA;Elméleti pécista vallási alapismeretek;EPTIT;0;7;1;1;-1;-1;#ETF
+EDF;Elméleti diafeldolgozás;EPTIT;0;7;1;1;-1;-1;EDKF
+EBAHI;Elméleti billentyűzet aritmetika és hardverismeret;EPTIT;0;7;2;1;-1;-1;EBAHIA
+EP IV.;Elméleti programozás IV.;EPTIT;0;7;1;1;-1;-1;EP III.
+ESZMPSA II.;Elméleti számtani és mértani programozás statisztika alapjai II.;EPTIT;0;7;1;1;-1;-1;ESZKALÁTOR I.,ESZMPSA I.
+
+ETA;Elméleti titkosítás alapjai;EPTIT;0;8;1;1;-1;-1;ESZMPSA II.,ESZKALÁTOR I.
+EM III.;Elméleti matematika III.;EPTIT;0;8;1;1;-1;-1;EM II.
+EÁ;Elméleti áramkörök;EPTIT;0;8;1;1;-1;-1;EBAHI,EKVASZAR II.
+ELÍRÁS;Elméleti írás;EPTIT;0;8;1;1;-1;-1;EBAHI
+EBECS II.;Elméleti becslések II.;EPTIT;0;8;1;1;-1;-1;EBECS I.
+EÖ;Elméleti önfejlesztés;EPTIT;0;8;1;1;-1;-1;ELISMERÉS
+EPJ;Elméleti programjavítás;EPTIT;0;8;1;1;-1;-1;EP IV.
+ECSA;Elméleti csapatmunka alapjai;EPTIT;0;8;1;1;-1;-1;#ETF
+ELLAN I.;Elméleti logikátlanság I.;EPTIT;0;8;2;2;-1;-1;EBLLAN
+EP V.;Elméleti programozás V.;EPTIT;0;8;1;1;-1;-1;EP IV.
+
+ESZASZ;Elméleti szimmetria és aszimmetria;EPTIT;0;9;1;1;-1;-1;#ETF
+ET I.;Elméleti titkosítás I.;EPTIT;0;9;2;1;-1;-1;ETA
+ESZKALÁTOR II.;Elméleti számremdszer kalkulátorok II.;EPTIT;0;9;1;1;-1;-1;ESZKALÁTOR I.
+ES II.;Elméleti statisztika II.;EPTIT;0;9;1;1;-1;-1;ES I.
+EM IV.;Elméleti matematika IV.;EPTIT;0;9;1;1;-1;-1;EM III.
+EMBER;Elméleti mozgások becslésének rendszere;EPTIT;0;9;1;1;-1;-1;EBECS II.
+ECS I.;Elméleti csapatmunka I.;EPTIT;0;9;1;2;-1;-1;ECSA
+EP VI.;Elméleti programozás VI.;EPTIT;0;9;1;1;-1;-1;EP V.
+
+EASZ I.;Elméleti antiszimmetria I.;EPTIT;0;10;2;1;-1;-1;ESZASZ
+ET II.;Elméleti titkosítás II.;EPTIT;0;10;1;1;-1;-1;ET I.
+EKM I.;Elméleti konjugált matematika I.;EPTIT;0;10;2;1;-1;-1;EM IV.
+EMI II.;Elméleti mesterséges intelligencia II.;EPTIT;0;10;1;1;-1;-1;EMI I.,ESZKALÁTOR II.
+EPIC;Elméleti programozás ismétlési céljai;EPTIT;0;10;2;0;-1;-1;EP VI.
+EL III.;Elméleti logika III.;EPTIT;0;10;1;1;-1;-1;EL II.
+EP VII.;Elméleti programozás VII.;EPTIT;0;10;1;1;-1;-1;EP VI.
+ESZMPS I.;Elméleti számtani és mértani programozás statisztika I.;EPTIT;0;10;1;2;-1;-1;ESZMPSA II.ES II.
+
+EASZ II.;Elméleti antiszimmetria II.;EPTIT;0;11;1;1;-1;-1;EASZ I.
+ET III.;Elméleti titkosítás III.;EPTIT;0;11;1;1;-1;-1;ET II.
+ESZKALÁTOR III.;Elméleti számremdszer kalkulátorok III.;EPTIT;0;11;1;1;-1;-1;EKM I.EMI II.
+EDJK I.;Elméleti diszjunktív kalkulus I.;EPTIT;0;11;2;2;-1;-1;EKM I.
+EGÉR;Elméleti gasztroprogramozás értelmezése;EPTIT;0;11;2;2;-1;-1;#ETF
+ECS II.;Elméleti csapatmunka II.;EPTIT;0;11;1;1;-1;-1;ECS I.
+EP VIII.;Elméleti programozás VIII.;EPTIT;0;11;1;1;-1;-1;EP VII.
+ESZMPS II.;Elméleti számtani és mértani programozás statisztika II.;EPTIT;0;11;1;1;-1;-1;ESZMPS I.
+
+ESZ;Elméleti szimmetriák;EPTIT;0;12;1;1;-1;-1;EASZ II.
+EDKALÁ I.;Elméleti dimenzionális kalkulátorok I.;EPTIT;0;12;2;2;-1;-1;ESZKALÁTOR III.
+EPE I.;Elméleti programozás elmélete I.;EPTIT;0;12;2;0;-1;-1;EP VIII.
+EDK I.;Elméleti diszkrét kalkulus I.;EPTIT;0;12;2;1;-1;-1;EDJK I.
+EKTKA;Elméleti kibertámadás és kalózkodás alapjai;EPTIT;0;12;1;1;-1;-1;ET III.,ECS II.
+EKÉ I.;Elméleti kódértelmezés I.;EPTIT;0;12;2;1;-1;-1;EP VIII.
+EGY I.;Elméleti gyakorlatok I.;EPTIT;0;12;2;1;-1;-1;#ETF
+EP IX.;Elméleti programozás IX.;EPTIT;0;12;1;1;-1;-1;EP VIII.
+ESZMPS III.;Elméleti számtani és mértani programozás statisztika III.;EPTIT;0;12;1;1;-1;-1;ESZMPS II.
+
+ESZÍ;Elméleti szakdolgozat írás;EPTIT;0;13;10;0;-1;-1;#ETF
+EDV;Elméleti dimenzionális vektorgrafika;EPTIT;0;13;1;2;-1;-1;EDKALÁ I.,EDKF,ESZMPS III.
+EMI III.;Elméleti mesterséges intelligencia III.;EPTIT;0;13;1;1;-1;-1;EDK I.,EMI II.
+EKT I.;Elméleti kibertámadás I.;EPTIT;0;13;2;2;-1;-1;EKTKA
+EKK;Elméleti kalózkodás;EPTIT;0;13;1;1;-1;-1;EKTKA
+EKÉ II.;Elméleti kódértelmezés II.;EPTIT;0;13;1;1;-1;-1;EKÉ I.
+ES III.;Elméleti statisztika III.;EPTIT;0;13;1;1;-1;-1;ES II.
+EGY II.;Elméleti gyakorlatok II.;EPTIT;0;13;1;1;-1;-1;EGY I.
+EVF;Elméleti világfejlesztés;EPTIT;0;13;2;1;-1;-1;EPVA
+EP X.;Elméleti programozás X.;EPTIT;0;13;2;2;-1;-1;EP IX.
+
+EKT II.;Elméleti kibertámadás II.;EPTIT;0;14;1;1;-1;-1;EKT I.
+ETEAAT;Elméleti telepátia elméleti alapai és alkalmazási területei;EPTIT;0;14;2;1;-1;-1;EDV
+ELFEGO;Elméleti felsőbb gondolkodás;EPTIT;0;14;2;1;-1;-1;EMI III.,EVF
+ELLAN II.;Elméleti logikátlanság II.;EPTIT;0;14;1;1;-1;-1;ELLAN I.
+EL IV.;Elméleti logika IV.;EPTIT;0;14;1;1;-1;-1;EL III.
+EMP;Elméleti mesterprogramozás;EPTIT;0;14;2;1;-1;-1;EP X.
+EPF;Elméleti programozás felsőfokon;EPTIT;0;14;2;1;-1;-1;EP X.
+EPDK;Elméleti programozás dimenziók között;EPTIT;0;14;2;2;-1;-1;EP X.,EDKALÁ I.,EMI III.

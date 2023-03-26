@@ -1,0 +1,7 @@
+igne
+false,false,false,true,false
+false,true,false,false
+true,true,true,false
+false,false,true,false
+MACSKA
+4/6

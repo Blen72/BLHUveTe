@@ -1,0 +1,10 @@
+Boss
+true,false,false
+false,true,false
+true,false,false,true,false
+B;W1,W3,W2|W3;W31
+B;W1,W2|W1;W3,W4
+false,true,false,false,false
+B1;W1,W2|B2;W3
+false,false,true,false,false,false
+false,false,false,true,false,false

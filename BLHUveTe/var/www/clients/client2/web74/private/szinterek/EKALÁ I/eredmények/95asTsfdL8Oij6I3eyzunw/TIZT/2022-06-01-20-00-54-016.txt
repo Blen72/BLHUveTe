@@ -1,0 +1,12 @@
+Oké
+false
+true
+false
+false
+true
+false
+true
+true
+true
+false
+7/11

@@ -1,0 +1,4 @@
+off
+2022-05-05
+0
+<summary>TEZT</summary><div class="kerdes"><h2>1. kérdés</h2>Van söröd?<br>Válasz: <input type="text"><br></div><div class="kerdes"><h2>2. kérdés</h2>Fing?<br><br><label><input type="radio" name="radio2">9000</label><br><label><input type="radio" name="radio2">a</label><br><label><input type="radio" name="radio2">seeeeeeeeeeeeeeg</label><br></div><div class="kerdes"><h2>3. kérdés</h2>Likas<br><br><label><input type="checkbox">3</label><br><label><input type="checkbox">v</label><br><label><input type="checkbox">b</label><br><label><input type="checkbox">r</label><br></div><form><></form>

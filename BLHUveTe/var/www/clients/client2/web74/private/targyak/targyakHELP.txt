@@ -1,0 +1,15 @@
+Oszlop sep=";"
+0. oszlop: tárgy kódja
+1. oszlop: tárgy neve
+2. oszlop: szak(ok) (sep=",")
+3. oszlop: képzés (0:BSc,1:MSc,...)
+4. oszlop: tárgy ajánlott féléve
+5. oszlop: Ea kredit
+6. oszlop: Gyak kredit
+7. oszlop: Ea óra
+8. oszlop: Gyak óra
+9. oszlop: előfeltételek (sep=",")
+
+Egyéb infók:
+#ETF: Elméleti tudásfelmérő
+Aminek nincs előfeltétele... annak is van: #ETF kivéve persze az #ETF vagy #-gel kezdődőket.

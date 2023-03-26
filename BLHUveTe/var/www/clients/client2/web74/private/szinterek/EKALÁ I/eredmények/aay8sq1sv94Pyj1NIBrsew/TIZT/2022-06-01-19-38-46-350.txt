@@ -1,0 +1,12 @@
+Nem.
+false
+true
+false
+false
+true
+true
+true
+false
+false
+true
+10/11

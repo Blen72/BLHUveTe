@@ -1,0 +1,47 @@
+body{
+    margin:0;
+    background-color: navy;
+    color: white;
+}
+
+#headernav{
+    position: sticky;
+    top:0;
+    background-color: aqua;
+    padding: 4px;
+    color: black;
+}
+
+#headernav header h1{
+    margin:0;
+    font-family: "Comic Sans MS", serif;
+    font-style: italic;
+}
+
+footer{
+    position: sticky;
+    bottom:0;
+    background-color: black;
+    padding: 4px;
+}
+
+nav{
+    border:solid crimson;
+    display: table;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+nav a{
+    border: solid red;
+    text-decoration: none;
+    display: table-cell;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+}
+
+nav a:hover{
+    transform: rotate(3deg) scale(120%);
+    background-color: tomato;
+}

@@ -1,0 +1,5 @@
+on
+3000-01-01T01:01
+30
+6969
+<div class="kerdes"><h2>1. kérdés</h2>0010<br><br><label><input type="radio" name="radio1">A</label><br><label><input type="radio" name="radio1">B</label><br><label><input type="radio" name="radio1">C</label><br><label><input type="radio" name="radio1">D</label><br></div><div class="kerdes"><h2>2. kérdés</h2>10<br><br><label><input type="checkbox" name="check2">A</label><br><label><input type="checkbox" name="check2">B</label><br></div><div class="kerdes"><h2>3. kérdés</h2>0111<br><br><label><input type="checkbox" name="check3">A</label><br><label><input type="checkbox" name="check3">B</label><br><label><input type="checkbox" name="check3">C</label><br><label><input type="checkbox" name="check3">D</label><br></div><div class="kerdes"><h2>4. kérdés</h2>000001<br><br><label><input type="radio" name="radio4">A</label><br><label><input type="radio" name="radio4">B</label><br><label><input type="radio" name="radio4">C</label><br><label><input type="radio" name="radio4">D</label><br><label><input type="radio" name="radio4">E</label><br><label><input type="radio" name="radio4">F</label><br></div>

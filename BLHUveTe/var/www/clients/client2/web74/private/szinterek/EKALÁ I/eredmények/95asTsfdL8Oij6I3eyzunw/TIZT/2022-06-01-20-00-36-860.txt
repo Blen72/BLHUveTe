@@ -1,0 +1,12 @@
+jó
+false
+true
+false
+false
+true
+true
+false
+false
+false
+true
+8/11

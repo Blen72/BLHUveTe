@@ -1,0 +1,4 @@
+on
+3022-05-05T10:03
+3
+<summary>TIZT</summary><div class="kerdes"><h2>1. kérdés</h2>Edd meg a zoknimat!<br>Válasz: <input type="text"><br></div><div class="kerdes"><h2>2. kérdés</h2>A és B<br><br><label><input type="radio" name="radio2">A</label><br><label><input type="radio" name="radio2">AB</label><br><label><input type="radio" name="radio2">B</label><br><label><input type="radio" name="radio2">Maxosz</label><br></div><div class="kerdes"><h2>3. kérdés</h2>Pistának...<br><br><label><input type="checkbox">...szar szaga van</label><br><label><input type="checkbox">...fényes a luka</label><br><label><input type="checkbox">...büdös</label><br><label><input type="checkbox">...ízltes a levese</label><br><label><input type="checkbox">...emberi a kinézete</label><br><label><input type="checkbox">...nincs pólója</label><br></div>
