@@ -17,7 +17,7 @@ function db_close($adatb){
 //Oracle MySQL váltás BEG
 function sql_col_mkr($col){
     if($col=="*")return $col;
-    //if(str_contains($col,"("))//TODO: COUNT(asd) -> COUNT(...)
+    if(str_contains($col,"("))return $col;//TODO: SUM(asd) -> SUM(...)
     if(str_contains($col,"."))$col=sql_col_of_table(explode(".",$col)[0],explode(".",$col)[1]);
     return $col;//MySQL: $col; Oracle: '"'.$col.'"';
 }

@@ -16,7 +16,7 @@ if($ishallgset){
     if($_SESSION["user"]["oktato"]>1||$self){
         echo "Felvehető tárgyak:<table><thead><tr><th>Felvétel</th><th>Tárgy neve</th><th>Tárgy kódja</th><th>Ajánlott képzés</th><th>Ajánlott félév</th><th>Kredit</th><th>Óra kezdete</th><th>Óra hossza</th></tr></thead><tbody>";
         //NEM JÓ: ($_SESSION["user"]["oktato"]>1?" AND kurzus.max_letszam>(SELECT COUNT(*) FROM hallgatoja WHERE kurzus.kurzuskod=hallgatoja.kurzuskod AND hallgatoja.felvett=true GROUP BY hallgatoja.kurzuskod)":"")
-        $felvehetotargyak=sql_select($adatb,"hallgato,kurzus",["kurzus.nev","kurzuskod","kredit","kurzus.kepzesId","ajanlott_felev","kezdet","hossz"],"WHERE hallgato.urancode='".$hallgato["urancode"]."' AND kurzuskod NOT IN (SELECT kurzus.kurzuskod FROM kurzus,hallgatoja WHERE kurzus.kurzuskod=hallgatoja.kurzuskod AND hallgatoja.urancode='".$hallgato["urancode"]."' AND (hallgatoja.erdemjegy>1 OR felvett=1) ) AND (SELECT COUNT(*) FROM elofeltetele WHERE elofeltetele.kurzuskodnak=kurzus.kurzuskod)=(SELECT COUNT(*) FROM elofeltetele WHERE kurzuskodnak=kurzus.kurzuskod AND elofeltetele.kurzuskod IN (SELECT hallgatoja.kurzuskod FROM hallgatoja WHERE hallgatoja.erdemjegy>1 AND hallgatoja.urancode='".$hallgato["urancode"]."')) ORDER BY ajanlott_felev,kurzus.kurzuskod");
+        $felvehetotargyak=sql_select($adatb,"hallgato,kurzus",["kurzus.nev","kurzuskod","kredit","kurzus.kepzesId","ajanlott_felev","kezdet","hossz"],"WHERE ".sql_col_of_table("hallgato","urancode")."='".$hallgato["urancode"]."' AND ".sql_col_mkr("kurzuskod")." NOT IN (".sql_subselect_mkr("kurzus,hallgatoja",["kurzus.kurzuskod"],"WHERE ".sql_col_of_table("kurzus","kurzuskod")."=".sql_col_of_table("hallgatoja","kurzuskod")." AND ".sql_col_of_table("hallgatoja","urancode")."='".$hallgato["urancode"]."' AND (".sql_col_of_table("hallgatoja","erdemjegy").">1 OR ".sql_col_mkr("felvett")."=1)").") AND (".sql_subselect_mkr("elofeltetele",["COUNT(*)"],"WHERE ".sql_col_of_table("elofeltetele","kurzuskodnak")."=".sql_col_of_table("kurzus","kurzuskod")).")=(".sql_subselect_mkr("elofeltetele",["COUNT(*)"],"WHERE ".sql_col_mkr("kurzuskodnak")."=".sql_col_of_table("kurzus","kurzuskod")." AND ".sql_col_of_table("elofeltetele","kurzuskod")." IN (".sql_subselect_mkr("hallgatoja",["hallgatoja.kurzuskod"],"WHERE ".sql_col_of_table("hallgatoja","erdemjegy").">1 AND ".sql_col_of_table("hallgatoja","urancode")."='".$hallgato["urancode"]."'").")").") ORDER BY ".sql_col_mkr("ajanlott_felev").",".sql_col_mkr("kurzus.kurzuskod"));
         while(($targy = mysqli_fetch_assoc($felvehetotargyak))!==null){
             echo "<tr><td><input type='checkbox' name='kkod_".$targy["kurzuskod"]."' value='".$targy["kurzuskod"]."' /></td><td>".$targy["nev"]."</td><td>".$targy["kurzuskod"]."</td><td>".$targy["kepzesId"]."</td><td>".$targy["ajanlott_felev"]."</td><td>".$targy["kredit"]."</td><td>".$targy["kezdet"]."</td><td>".$targy["hossz"]."</td></tr>";
         }
@@ -28,13 +28,13 @@ if($ishallgset){
         $siker=true;
         foreach ($_POST as $kulcs=>$posta){
             if(startsWith($kulcs,"kkod_")/*$posta!=="Felvétel"&&$kulcs!=="hallgato"*/){
-                $nedjere=sql_select($adatb,"hallgatoja",["MAX(hanyadjara) AS hany"],"WHERE kurzuskod='".$posta."' AND urancode='".$hallgato["urancode"]."' GROUP BY kurzuskod");
+                $nedjere=sql_select($adatb,"hallgatoja",["MAX(".sql_col_mkr("hanyadjara").") AS hany"],"WHERE ".sql_col_mkr("kurzuskod")."='".$posta."' AND ".sql_col_mkr("urancode")."='".$hallgato["urancode"]."' GROUP BY ".sql_col_mkr("kurzuskod"));
                 $nplusegyedjere = mysqli_fetch_assoc($nedjere)["hany"]+1;
                 mysqli_free_result($nedjere);
                 $siker&=sql_insert($adatb,"hallgatoja",["urancode","kurzuskod","hanyadjara","felveteli_felev","felvett"],"ssiii",[$hallgato["urancode"],$posta,$nplusegyedjere,$hallgato["felev"],1]);
             }
         }
-        if($siker ){
+        if($siker){
             header("Location: UranIndex.php");//reload
         } else {
             echo "Sikertelen tárgyfelvétel!";
@@ -51,9 +51,11 @@ if($ishallgset){
                 if(endsWith($kulcs,"jegy")){
                     if(!empty($posta)){
                         $kkod=$prev;
+                        //TODO
                         $siker&=sql_update($adatb, "hallgatoja",["felvett"=>0,"erdemjegy"=>$posta],"WHERE urancode='".$hallgato["urancode"]."' AND kurzuskod='".$kkod."' AND hanyadjara=(SELECT MAX(hanyadjara) FROM hallgatoja WHERE kurzuskod='".$kkod."' AND urancode='".$hallgato["urancode"]."' GROUP BY kurzuskod)");
                     }
                 } else {
+                    //TODO
                     $siker&=sql_delete($adatb,"hallgatoja","WHERE urancode='".$hallgato["urancode"]."' AND kurzuskod='".$posta."' AND hanyadjara=(SELECT MAX(hanyadjara) FROM hallgatoja WHERE hallgatoja.urancode='".$hallgato["urancode"]."' AND kurzuskod='".$posta."' GROUP BY hallgatoja.kurzuskod)");
                 }
             }
