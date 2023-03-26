@@ -34,7 +34,7 @@ if($ishallgset){
                 $siker&=sql_insert($adatb,"hallgatoja",["urancode","kurzuskod","hanyadjara","felveteli_felev","felvett"],"ssiii",[$hallgato["urancode"],$posta,$nplusegyedjere,$hallgato["felev"],1]);
             }
         }
-        if($siker){
+        if($siker ){
             header("Location: UranIndex.php");//reload
         } else {
             echo "Sikertelen tárgyfelvétel!";
