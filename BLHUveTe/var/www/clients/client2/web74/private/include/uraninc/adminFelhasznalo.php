@@ -1,43 +1,60 @@
 <?php
-if($_SESSION["user"]["oktato"]>1){
-    echo "<h3>Felhasználók kezelése</h3>";
-    echo "<h4>Felhasználók</h4>";
-    echo "<form action='UranIndex.php' method='post'>";
-    print_sql($adatb, "felhasznalo", ["urancode","nev",/*"jelszo",*/"profilkep"],"WHERE ".sql_col_mkr("urancode")." NOT IN (".sql_subselect_mkr("hallgato",["urancode"]).") AND ".sql_col_mkr("urancode")." NOT IN (".sql_subselect_mkr("oktato",["urancode"]).")","<th>Törlés</th><th>Oktatóvá váltás</th><th>Hallgatóvá váltás</th>",[["delUser","urancode","TÖRLÉS"],["addO","urancode","OKTATÓVÁ"],["addH","urancode","HALLGATÓVÁ"]]);
-    echo "</form>";
-    echo "<h4>Hallgató</h4>";
-    echo "<form action='UranIndex.php' method='post'>";
-    print_sql($adatb, "hallgato", ["urancode","nev",/*"jelszo",*/"profilkep","szakkod","kepzesId","felev"],"WHERE ".sql_col_mkr("urancode")." NOT IN (".sql_subselect_mkr("oktato",["urancode"]).")","<th>Törlés</th><th>Oktatóvá váltás</th><th>Hallgatóból váltás</th>",[["delUser","urancode","TÖRLÉS"],["addO","urancode","OKTATÓVÁ"],["removeH","urancode","HALLGATÓBÓL"]]);
-    echo "</form>";
-    echo "<h4>Oktató</h4>";
-    echo "<form action='UranIndex.php' method='post'>";
-    print_sql($adatb, "oktato", ["urancode","nev",/*"jelszo",*/"profilkep","jogosultsag"],"WHERE ".sql_col_mkr("urancode")." NOT IN (".sql_subselect_mkr("hallgato",["urancode"]).")","<th>Törlés</th><th>Oktatóból váltás</th><th>Hallgatóvá váltás</th>",[["delUser","urancode","TÖRLÉS"],["removeO","urancode","OKTATÓBÓL"],["addH","urancode","HALLGATÓVÁ"]]);
-    echo "</form>";
-    echo "<h4>Oktató és Hallgató</h4>";
-    echo "<form action='UranIndex.php' method='post'>";
-    print_sql($adatb, "oktato,hallgato", ["hallgato.urancode","hallgato.nev",/*"hallgato.jelszo",*/"hallgato.profilkep","jogosultsag","szakkod","kepzesId","felev"],"WHERE ".sql_col_of_table("oktato","urancode")."=".sql_col_of_table("hallgato","urancode"),"<th>Törlés</th><th>Oktatóból váltás</th><th>Hallgatóvá váltás</th>",[["delUser","urancode","TÖRLÉS"],["removeO","urancode","OKTATÓBÓL"],["removeH","urancode","HALLGATÓBÓL"]]);
-    echo "</form>";
-    if(isset($_POST["delUser"])){
-        sql_delete($adatb,"felhasznalo","WHERE ".sql_col_mkr("urancode")."='".$_POST["delUser"]."'");
-        header("Location: UranIndex.php");
-    } elseif(isset($_POST["addH"])) {
-        $dat=sql_select($adatb,"felhasznalo",["urancode","nev","jelszo","profilkep"],"WHERE ".sql_col_mkr("urancode")."='".$_POST["addH"]."'");
-        $adat=mysqli_fetch_assoc($dat);
-        mysqli_free_result($dat);
-        sql_insert($adatb,"hallgato",["urancode","nev","jelszo","profilkep","szakkod","kepzesId","felev"],"ssssssd",[$adat["urancode"],$adat["nev"],$adat["jelszo"],$adat["profilkep"],"EPTIT","BSc",1]);
-        header("Location: UranIndex.php");
-    } elseif(isset($_POST["addO"])) {
-        $dat=sql_select($adatb,"felhasznalo",["urancode","nev","jelszo","profilkep"],"WHERE ".sql_col_mkr("urancode")."='".$_POST["addO"]."'");
-        $adat=mysqli_fetch_assoc($dat);
-        mysqli_free_result($dat);
-        sql_insert($adatb,"oktato",["urancode","nev","jelszo","profilkep","jogosultsag"],"ssssd",[$adat["urancode"],$adat["nev"],$adat["jelszo"],$adat["profilkep"],1]);
-        header("Location: UranIndex.php");
-    } elseif(isset($_POST["removeH"])) {
-        sql_delete($adatb,"hallgato","WHERE ".sql_col_mkr("urancode")."='".$_POST["removeH"]."'");
-        header("Location: UranIndex.php");
-    } elseif(isset($_POST["removeO"])) {
-        sql_delete($adatb,"oktato","WHERE ".sql_col_mkr("urancode")."='".$_POST["removeO"]."'");
-        header("Location: UranIndex.php");
-    }
+$conn = oci_connect('JAROSLAV', '1111', 'localhost/XE');
+
+$compiled = oci_parse($conn, "SELECT \"urancode\", \"nev\" FROM \"Felhasznalo\"");
+oci_execute($compiled);
+
+?>
+<br>
+<table style="font-family: arial, sans-serif; border-collapse: collapse; width: 100%;">
+<h1>Felhasznalok <button style="margin: 5px; padding-top: 5px; padding-bottom: 5px">Uj Felhasznalo Felvetele</button></h1>
+<tr>
+    <th style= "border: 3px solid black;text-align: left;">Urancode</th>
+    <th style= "border: 3px solid black;text-align: left;">Nev</th>
+    <th style= "border: 3px solid black;text-align: left;">Torles</th>
+  </tr>
+  <?php
+while ($row = oci_fetch_assoc($compiled)) {
+    ?>
+    <tr>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["urancode"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["nev"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><Button>Del</button></td>
+    </tr>
+    
+    <?php
+
 }
+oci_free_statement($compiled);
+$compiled = oci_parse($conn, "SELECT \"urancode\", \"nev\", \"szakkod\", \"kepzesId\", \"felev\" FROM \"Hallgato\"");
+oci_execute($compiled);
+?>
+<br>
+<table style="font-family: arial, sans-serif; border-collapse: collapse; width: 100%;">
+<h1>Hallgatok</h1>
+<tr>
+    <th style= "border: 3px solid black;text-align: left;">Urancode</th>
+    <th style= "border: 3px solid black;text-align: left;">Nev</th>
+    <th style= "border: 3px solid black;text-align: left;">Szakkod</th>
+    <th style= "border: 3px solid black;text-align: left;">KepzesID</th>
+    <th style= "border: 3px solid black;text-align: left;">Felev</th>
+    <th style= "border: 3px solid black;text-align: left;">Torles</th>
+  </tr>
+  <?php
+while ($row = oci_fetch_assoc($compiled)) {
+    ?>
+    <tr>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["urancode"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["nev"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["szakkod"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["kepzesId"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["felev"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><Button>Del</button></td>
+    </tr>
+    
+    <?php
+
+}
+oci_free_statement($compiled);
+oci_close($conn);
 ?>
