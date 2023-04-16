@@ -1,20 +1,35 @@
 <?php
-if($_SESSION["user"]["oktato"]>1){
-    echo "<h4>Oktatója</h4>";
-    echo "<form action='UranIndex.php' method='post'>";
-    print_sql($adatb, "oktatoja,oktato", ["oktatoja.urancode","nev","kurzuskod"],"WHERE oktato.urancode=oktatoja.urancode","<th>Törlés</th>",[["delOktatoja",["urancode","kurzuskod"],"TÖRLÉS"]]);
-    echo "Új oktatója Urankódja: ";print_selectElement($adatb,"oktato","urancode","oktatojaKod");echo "<br/>";
-    echo "Új oktatója kurzuskódja: ";print_selectElement($adatb,"kurzus","kurzuskod","oktatojaKurzuskod");echo "<br/>";
-    echo "<input type='submit' name='addOktatoja' value='Új oktatója hozzáadása'/>";
-    echo "</form>";
-    //echo "A módodsításnak nincs értelme. Túl bonyolult. Egyszerűbb ha töröld majd hozzáadsz újat!";
-    if(isset($_POST["delOktatoja"])){
-        $keys=explode(",", $_POST["delOktatoja"]);
-        sql_delete($adatb,"oktatoja","WHERE ".sql_col_mkr("urancode")."='".$keys[0]."' AND ".sql_col_mkr("kurzuskod")."='".$keys[1]."'");
-        header("Location: UranIndex.php");
-    } elseif (isset($_POST["addOktatoja"])){
-        sql_insert($adatb,"oktatoja",["urancode","kurzuskod"],"ss",[$_POST["oktatojaKod"],$_POST["oktatojaKurzuskod"]]);
-        header("Location: UranIndex.php");
-    }
+session_start();
+$conn = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
+
+$compiled = oci_parse($conn, "SELECT \"urancode\", \"nev\", \"jogosultsag\" FROM \"Oktato\"");
+oci_execute($compiled);
+
+?>
+<br>
+<table style="font-family: arial, sans-serif; border-collapse: collapse; width: 100%;">
+<h1>Oktatok</h1>
+<tr>
+    <th style= "border: 3px solid black;text-align: left;">Urancode</th>
+    <th style= "border: 3px solid black;text-align: left;">Nev</th>
+    <th style= "border: 3px solid black;text-align: left;">Jogosultsag</th>
+    <th style= "border: 3px solid black;text-align: left;">Torles</th>
+  </tr>
+  <?php
+while ($row = oci_fetch_assoc($compiled)) {
+    $code = $row["urancode"];
+    $nev = $row["nev"];
+    ?>
+    <tr>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["urancode"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["nev"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row["jogosultsag"]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><a href="../private/include/uraninc/deleteFelhasznalo.php?varname=<?php echo $code ?>" onclick="return confirm('Biztosan torolni szeretne a kovetkezo felhasznalot: <?php echo $nev ?> ?')"><Button>Del</button></a></td>
+    </tr>
+    
+    <?php
+
 }
+oci_free_statement($compiled);
+oci_close($conn);
 ?>

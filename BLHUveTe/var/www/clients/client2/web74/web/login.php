@@ -30,24 +30,28 @@ include_once "../private/include/sqlhelper.php";
             $uname = $_POST["username"];
             $pwd = $_POST["password"];//Psszt! Béla(admin) jelszava: 🐱Béla
             $adatb=db_open();
-            $profiles = sql_select($adatb,"felhasznalo",["*"]);
+            $profiles = sql_select($adatb,"Felhasznalo",["*"]);
+            oci_execute($profiles);
             $mennyirevagyreszeg = false;
-            while(($profile = mysqli_fetch_assoc($profiles))!==null){
+            while($profile = oci_fetch_assoc($profiles)){
                 if ($profile["nev"] === $uname && password_verify($pwd, $profile["jelszo"])) {
                     //$hallgato=sql_select($adatb,"felhasznalo,hallgato",["*"],"WHERE felhasznalo.urancode=hallgato.urancode AND hallgato.urancode=?","s",[$profile["urancode"]]);
-                    $hallgato=sql_select($adatb,"felhasznalo,hallgato,szak",["*"],"WHERE ".sql_col_of_table("felhasznalo","urancode")."=".sql_col_of_table("hallgato","urancode")." AND ".sql_col_of_table("hallgato","urancode")."='".$profile["urancode"]."' AND ".sql_col_of_table("szak","szakkod")."=".sql_col_of_table("hallgato","szakkod"));
-                    $hallgatodat=mysqli_fetch_assoc($hallgato);
-                    mysqli_free_result($hallgato);
-                    $oktato=sql_select($adatb,"felhasznalo,oktato",["*"],"WHERE ".sql_col_of_table("felhasznalo","urancode")."=".sql_col_of_table("oktato","urancode")." AND ".sql_col_of_table("oktato","urancode")."='".$profile["urancode"]."'");
-                    $oktatodat=mysqli_fetch_assoc($oktato);
-                    mysqli_free_result($oktato);
-                    $_SESSION["user"] = $profile+($hallgatodat===null?["hallgato"=>false]:$hallgatodat+["hallgato"=>true])+($oktatodat===null?["oktato"=>false]:$oktatodat+["oktato"=>(int)$oktatodat["jogosultsag"]]);
+                    $hallgato=sql_select($adatb,"Felhasznalo,Hallgato,Szak",["*"],"WHERE ".sql_col_of_table("Felhasznalo","urancode")."=".sql_col_of_table("Hallgato","urancode")." AND ".sql_col_of_table("Hallgato","urancode")."='".$profile["urancode"]."' AND ".sql_col_of_table("Szak","szakkod")."=".sql_col_of_table("Hallgato","szakkod"));
+                    oci_execute($hallgato);//oracle query exec
+                    $hallgatodat=oci_fetch_assoc($hallgato);
+                    oci_free_statement($hallgato);
+                    $oktato=sql_select($adatb,"Felhasznalo,Oktato",["*"],"WHERE ".sql_col_of_table("Felhasznalo","urancode")."=".sql_col_of_table("Oktato","urancode")." AND ".sql_col_of_table("Oktato","urancode")."='".$profile["urancode"]."'");
+                    oci_execute($oktato);//oracle query exec
+                    $oktatodat=oci_fetch_assoc($oktato);
+                    oci_free_statement($oktato);
+                    $_SESSION["user"] = $profile+($hallgatodat===null?["hallgato"=>false]:["hallgato"=>true])+($oktatodat===null?["oktato"=>false]:["oktato"=>(int)$oktatodat["jogosultsag"]]);
+                    $_SESSION["uran_code"] = $profile["urancode"];
                     header("Location: index.php");
                     $mennyirevagyreszeg = true;
                     break;
                 }
             }
-            mysqli_free_result($profiles);
+            oci_free_statement($profiles);
             db_close($adatb);
             if(!$mennyirevagyreszeg){
                 $ret = "<strong>Sikertelen belépés! Az adatok nem megfelelőek!</strong>";

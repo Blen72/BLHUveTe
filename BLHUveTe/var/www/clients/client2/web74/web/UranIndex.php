@@ -44,10 +44,11 @@ function print_selectElement($adatb,$table,$col,$selName,$canBeNull=false){
     echo "<select name='".$selName."'>";
     if($canBeNull)echo "<option value=''>-</option>";
     $tablerows=sql_select($adatb,$table,[$col]);
-    while(($row = mysqli_fetch_assoc($tablerows))!==null){
+    oci_execute($tablerows);
+    while($row = oci_fetch_assoc($tablerows)){
         echo "<option value='".$row[sql_col_mkr($col)]."'>".$row[sql_col_mkr($col)]."</option>";
     }
-    mysqli_free_result($tablerows);
+    oci_free_statement($tablerows);
     echo "</select>";
 }
 
@@ -62,15 +63,8 @@ function updateArrayHelper($arr){
 if(isset($_SESSION["user"])){
     $adatb=db_open();
     echo "<p>Az Uran kódod: ".$_SESSION["user"]["urancode"]."</p>";
-    if($_SESSION["user"]["oktato"]){
-        echo "Megtekintés/szerkesztés/jegybeírás neki:<form action='UranIndex.php' method='post'>Hallgató neve: <select name='hallgato'>";
-        $hallgs=sql_select($adatb,"hallgato",["urancode","nev"]);
-        while(($hallg = mysqli_fetch_assoc($hallgs))!==null){
-            echo "<option value='".$hallg["urancode"]."'>".$hallg["nev"]."</option>";
-        }
-        mysqli_free_result($hallgs);
-        echo "</select><input type='submit' name='viewAs' value='Megtekintés/szerkesztés'/></form>";
-    }
+    error_reporting(E_ERROR | E_PARSE);
+    
     if(isset($_SESSION["user"]["uransession"]["toshow"]))include_once("../private/include/uraninc/".$_SESSION["user"]["uransession"]["toshow"]);
     db_close($adatb);
 }

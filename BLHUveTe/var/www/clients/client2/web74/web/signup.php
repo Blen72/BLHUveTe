@@ -34,20 +34,10 @@ include_once "../private/include/sqlhelper.php";
         }
 
         $username = $_POST["username"];
-        $urancode=makeUran($username);
+        $urancode=makeUran(str_shuffle($username));
         $password = $_POST["password"];
         $passwordagain = $_POST["passwordagain"];
         $profilepic="";//TODO: profil;
-
-        $adatb=db_open();
-        $profiles = sql_select($adatb,"felhasznalo",["nev","urancode"]);
-        while(($profile = mysqli_fetch_assoc($profiles))!==null){
-            //var_dump($profile);
-            if($profile["nev"] === $username || $profile["urancode"] === $urancode){
-                $errors[] = "A felhasználónév már foglalt! Próbáld meg a #2-t vagy #n-t!";
-            }
-        }
-        mysqli_free_result($profiles);
 
         if($password !== $passwordagain){
             $errors[] = "A két jelszónak meg kell egyeznie!";
@@ -58,11 +48,17 @@ include_once "../private/include/sqlhelper.php";
         //$errors[]="Nincs regisztrációs időszak! ezen a DC szerveren lehet tájékozódni: https://discord.gg/HEjFwC9yE8";//TODO: Reg időszak egy config fileba amit admin szerkeszthet!
 
         if(count($errors) === 0){
+            $conn = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
             $password=password_hash($password, PASSWORD_DEFAULT);
-            $args=["nev" => $username, "urancode" => $urancode, "felev" => 1, "szakkod"=>"EPTIT", "kepzes"=>"BSc", "jelszo" => $password, "profilkep"=>$profilepic];
-            $argsUser=["nev" => $username, "urancode" => $urancode, "jelszo" => $password, "profilkep"=>$profilepic];
-            sql_insert($adatb,"felhasznalo",array_keys($argsUser),"ssss",$argsUser);
-            sql_insert($adatb,"hallgato",array_keys($args),"ssissss",$args);
+            $compiled = oci_parse($conn, "INSERT INTO \"Felhasznalo\" (\"urancode\", \"nev\", \"jelszo\", \"profilkep\") VALUES (:urancode, :nev, :jelszo, :profilkep)");
+            oci_bind_by_name($compiled, ':urancode', $urancode);
+            oci_bind_by_name($compiled, ':nev', $username);
+            oci_bind_by_name($compiled, ':jelszo', $password);
+            oci_bind_by_name($compiled, ':profilkep', $profilepic);
+            oci_execute($compiled);
+            //oci_commit($conn);
+            oci_free_statement($compiled);
+            oci_close($conn);
 
             /*$profiles[] = ["username" => $username, "URANCODE" => $urancode, "felev" => 1, "szak"=>"EPTIT", "password" => $password, "admin" => false];
 
@@ -70,7 +66,6 @@ include_once "../private/include/sqlhelper.php";
             createUsersFolder($urancode);*/
             header("Location: login.php");
         }
-        db_close($adatb);
     }
 
     ?>

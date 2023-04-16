@@ -1,0 +1,43 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    line-height: 1.25;
+    color: white;
+    background-color: #001F52;
+}
+.new-container{
+    padding: 16px;
+  }
+  
+  .new-container button{
+    background-color: #001F52;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .new-container button:hover{
+    opacity: 0.8;
+  }
+
+  .new-form{
+    border: 3px solid #000000;
+    background-color: #000000;
+    margin: auto;
+    width: 250px;
+}
+
+.new-form input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+  }
+
+  #epulet_neve{
+    width: 150px;
+  }
