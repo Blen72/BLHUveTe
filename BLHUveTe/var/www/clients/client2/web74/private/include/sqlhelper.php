@@ -2,16 +2,12 @@
 const DBNAME="blhuvete";
 
 function db_open(){
-    $adatb = mysqli_connect('localhost', 'root','') or die("Nem sikerült az adatbázis szerveréhez csatlakozni!");
-    mysqli_query($adatb, 'SET NAMES UTF8');
-    mysqli_query($adatb, "SET character_set_results=utf8");
-    mysqli_set_charset($adatb, 'utf8');
-    if(!mysqli_select_db($adatb, "blhuvete"))die("Nem sikerült az adatbázishoz csatlakozni!");
+    $adatb = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
     return $adatb;
 }
 
 function db_close($adatb){
-    mysqli_close($adatb);
+    oci_close($adatb);
 }
 
 //Oracle MySQL váltás BEG
@@ -19,12 +15,12 @@ function sql_col_mkr($col){
     if($col=="*")return $col;
     if(str_contains($col,"("))return $col;//TODO: SUM(asd) -> SUM(...)
     if(str_contains($col,"."))$col=sql_col_of_table(explode(".",$col)[0],explode(".",$col)[1]);
-    return $col;//MySQL: $col; Oracle: '"'.$col.'"';
+    return '"'.$col.'"';//MySQL: $col; Oracle: '"'.$col.'"';
 }
 
 function sql_table_mkr($table){
     $tables=explode(",", $table);
-    foreach($tables as &$t)$t=$t;//MySQL: $t; Oracle: '"'.$t.'"';
+    foreach($tables as &$t)$t='"'.$t.'"';//MySQL: $t; Oracle: '"'.$t.'"';
     return implode(",", $tables);
 }
 
@@ -59,7 +55,8 @@ function sql_select($adatb,$table,$cols,$whereetc="",$distinct=false){
     $table=sql_table_mkr($table);
     foreach($cols as &$col)$col=sql_col_mkr($col);
     $sel="SELECT ".($distinct?"DISTINCT ":"").implode(",",$cols)." FROM ".$table." ".$whereetc;
-    return mysqli_query($adatb, $sel);
+    $stid = oci_parse($adatb, $sel);
+    return $stid;
 }
 
 function sql_delete($adatb,$table,$whereetc){

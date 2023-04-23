@@ -1,97 +1,73 @@
 <?php
 session_start();
-include_once("../private/include/func.php");
+if(!$_SESSION["uran_code"])  
+{  
+  
+    header("Location: login.php");  
+} 
+
+$urancode = $_SESSION["uran_code"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Elméleti Modulo</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <div style="margin-left: 0" id="headernav">
     <header><h1>EModulo</h1></header>
     <nav><a href="index.php">Elosztó</a></nav>
-</div>
-<main>
-<h1>ILYEN KÖNNYEN NEM LEHET FELADNI!</h1>
-<h2>ILYEN KÖNNYEN NEM LEHET FELADNI!</h2>
-<h3>ILYEN KÖNNYEN NEM LEHET FELADNI!</h3>
-<h4>ILYEN KÖNNYEN NEM LEHET FELADNI!</h4>
-<h5>ILYEN KÖNNYEN NEM LEHET FELADNI!</h5>
-<h6>ILYEN KÖNNYEN NEM LEHET FELADNI!</h6>
-<?php
-    if(isset($_SESSION["user"])){
-        echo "<span style='color: red;'>";
-        $elmofile=fopen("../private/hallgatok/".$_SESSION["user"]["URANCODE"]."/elmovaluta.txt","r");
-        /*if($elmofile===FALSE){
-            $elmofile2=fopen("../private/hallgatok/".$_SESSION["user"]["URANCODE"]."/elmovaluta.txt","w");
-            fwrite($elmofile2,"0\n0");
-            fclose($elmofile2);
-            $elmofile=fopen("../private/hallgatok/".$_SESSION["user"]["URANCODE"]."/elmovaluta.txt","r");
-        }*/
-        fscanf($elmofile,"%f",$egyenleg);
-        fscanf($elmofile,"%f",$bankban);
-        fclose($elmofile);
-        if(isset($_GET["bankio"])){
-            $be=$_GET["betesz"];
-            $ki=$_GET["kivesz"];
-            $bemode=(bool)strlen($be);
-            $kimode=(bool)strlen($ki);
-            if(!($bemode^$kimode)){//xnor
-                echo "Pontosan egy mezőt tölts ki!<br/>";
-            } else if($bemode) {
-                if(!is_numeric($be)||intval($be)<0){
-                    echo "Pozitív számot írj be!<br/>";
-                } else {
-                    $be=intval($be)*69;
-                    if($egyenleg>=$be){
-                        $egyenleg-=$be;
-                        $bankban+=$be;
-                        $elmofile=fopen("../private/hallgatok/".$_SESSION["user"]["URANCODE"]."/elmovaluta.txt","w");
-                        fwrite($elmofile,$egyenleg."\n".$bankban);
-                        fclose($elmofile);
-                    } else {
-                        echo "Nincs elég pénzed nálad!<br/>";
-                    }
-                }
-            } else if($kimode) {
-                if(!is_numeric($ki)||intval($ki)<0){
-                    echo "Pozitív számot írj be!<br/>";
-                } else {
-                    $ki=intval($ki)*420;
-                    if($bankban>=$ki){
-                        $bankban-=$ki;
-                        $egyenleg+=$ki;
-                        $elmofile=fopen("../private/hallgatok/".$_SESSION["user"]["URANCODE"]."/elmovaluta.txt","w");
-                        fwrite($elmofile,$egyenleg."\n".$bankban);
-                        fclose($elmofile);
-                    } else {
-                        echo "Nincs elég pénzed a bankban!<br/>";
-                    }
-                }
-            } else {
-                echo "Na jó ezt hogy csináltad? Írd le a DC-re hogy: EM38IMPELSEMODESWITCH <br/>";
-            }
-        }
-        echo "</span>";
-        echo "Elmobank<br/>";
-        echo "Egyenleged: ".$egyenleg."<br/>";
-        echo "Bankban: ".$bankban."<br/>";
-        echo "Eköltekezés még fejlesztés alatt!<br/>";
 
-        ?>
-        <form action="EModuloIndex.php" method="get">
-            <label><input type="number" name="betesz"></label>
-            <label><input type="number" name="kivesz"></label>
-            <input type="submit" name="bankio" value="Betesz/Kivesz">
-        </form>
-        <?php
-    } else {
-        echo "Jelentkezz be!";
+    <form action="EModuloIndex.php" method="POST">
+    <button type="submit" name="submit-search">Uzenetek mutatasa</button>
+    </form>
+    </div>
+
+    <?php
+    if(isset($_POST['submit-search'])){?>
+
+<table style="font-family: arial, sans-serif; border-collapse: collapse; width: 100%;">
+<h1>Uzenetek</h1><a href="ujUzenet.php?varname=<?php echo $urancode ?>"><button>Uj Uzenet</button></a><br><br>
+<tr>
+    <th style= "border: 3px solid black;text-align: left;">Kuldte</th>
+    <th style= "border: 3px solid black;text-align: left;">Uzenet</th>
+    <th style= "border: 3px solid black;text-align: left;">Idopont</th>
+  </tr>
+  <?php
+
+  $condb = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
+  $get_uzenet = oci_parse($condb, "SELECT \"uzenet\", \"datum\", \"o_urancode\" FROM \"Uzen\" WHERE \"h_urancode\" = '{$urancode}'");
+  oci_execute($get_uzenet);
+  
+while ($row = oci_fetch_array($get_uzenet)) {
+    //itt levagni a stringet else pedig csak continue ha nem azonos
+    $escaped_uzenet = explode("---", $row[0]);
+    if($escaped_uzenet[0] !== "uzenet"){
+        continue;
     }
+    $user = $row[2];
+    $get_name = oci_parse($condb, "SELECT \"nev\" FROM \"Felhasznalo\" WHERE \"urancode\" = '{$user}'");
+    oci_execute($get_name);
+    $sor = oci_fetch_array($get_name);
+    $nev = $sor[0];
+    oci_free_statement($get_name);
+    ?>
+
+    <tr>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $nev?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $escaped_uzenet[1]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row[1]?></td>
+    </tr>
+
+<?php }
+}
 ?>
-</main>
+<script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
 </body>
 </html>
