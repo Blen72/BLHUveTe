@@ -4,11 +4,11 @@ $condb = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
 $kurzuskod=$_POST['kurzuskod'];
 $teremkod=$_POST['teremkod'];
 $o_urancode=$_POST['o_urancode'];
-$idopont=date('d-m-Y', strtotime($_POST['idopont']));    
+$idopont=date('d-m-Y H:i', strtotime($_POST['idopont']));    
 $tipus=$_POST['tipus'];
 $max_letszam=$_POST['max_letszam'];
 
-$compiled = oci_parse($condb, "INSERT INTO \"Vizsga\" (\"kurzuskod\", \"teremkod\", \"o_urancode\", \"idopont\", \"tipus\", \"max_letszam\") VALUES (:kurzuskod, :teremkod, :o_urancode, to_date(:idopont, 'DD-MM-YYYY'), :tipus, :max_letszam)");
+$compiled = oci_parse($condb, "INSERT INTO \"Vizsga\" (\"kurzuskod\", \"teremkod\", \"o_urancode\", \"idopont\", \"tipus\", \"max_letszam\") VALUES (:kurzuskod, :teremkod, :o_urancode, to_date(:idopont, 'DD-MM-YYYY HH24:MI'), :tipus, :max_letszam)");
 oci_bind_by_name($compiled, ':kurzuskod', $kurzuskod);
 oci_bind_by_name($compiled, ':teremkod', $teremkod);
 oci_bind_by_name($compiled, ':o_urancode', $o_urancode);

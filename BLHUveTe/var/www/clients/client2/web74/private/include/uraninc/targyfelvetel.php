@@ -1,5 +1,8 @@
 <?php
 $condb = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
+$sql = oci_parse($condb, "alter session set nls_date_format='DD-MM-YYYY HH24:MI'");
+oci_execute($sql);
+oci_free_statement($sql);
 $targyfelvetel = "targyfelvetel";
 $get_info = oci_parse($condb, "SELECT \"ertek\" FROM \"AdminBeallitasok\" WHERE \"id\" = '{$targyfelvetel}'");
 oci_execute($get_info);
@@ -48,7 +51,7 @@ while ($row = oci_fetch_array($compiled)) {
 
 }
 oci_free_statement($compiled);
-$compiled = oci_parse($conn, "SELECT DISTINCT \"Kurzus\".\"nev\", \"kurzuskod\", \"kredit\", \"Kurzus\".\"kepzesId\", \"ajanlott_felev\", \"kezdet\", \"hossz\", \"max_letszam\" FROM \"Kurzus\", \"Hallgato\" WHERE \"kurzuskod\" NOT IN (SELECT \"kurzuskod\" FROM \"Hallgatoja\" WHERE \"Hallgatoja\".\"urancode\" = '${code}')");
+$compiled = oci_parse($conn, "SELECT DISTINCT \"Kurzus\".\"nev\", \"Kurzus\".\"kurzuskod\", \"kredit\", \"Kurzus\".\"kepzesId\", \"ajanlott_felev\", \"kezdet\", \"hossz\", \"max_letszam\" FROM \"Kurzus\", \"Hallgato\", \"Szakokonvan\" WHERE \"Hallgato\".\"szakkod\" = \"Szakokonvan\".\"szakkod\" AND \"Kurzus\".\"kurzuskod\" = \"Szakokonvan\".\"kurzuskod\" AND \"Kurzus\".\"kurzuskod\" NOT IN (SELECT \"kurzuskod\" FROM \"Hallgatoja\" WHERE \"Hallgatoja\".\"urancode\" = '${code}')");
 oci_execute($compiled);
 ?>
 <br>

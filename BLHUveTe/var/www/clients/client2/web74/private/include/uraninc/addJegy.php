@@ -12,8 +12,6 @@ $data = oci_fetch_array($get_oktatoja);
 oci_free_statement($get_oktatoja);
 oci_close($condb);
 if(!isset($data[0])){
-    oci_free_statement($get_oktatoja);
-    oci_close($condb);
      echo("<script>alert('On nem oktatoja a hallgatonak!')</script>");
  	 echo("<script>window.location = '../../../../web74/web/UranIndex.php';</script>");
 }

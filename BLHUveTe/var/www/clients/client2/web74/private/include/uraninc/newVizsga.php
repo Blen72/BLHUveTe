@@ -46,7 +46,7 @@ oci_close($condb);
   <br>
   <input type="hidden" name="o_urancode" value="<?=$urancode?>">
   <label for="idopont"><b>Idopont</b></label>
-  <input type="date" name="idopont" autoComplete="off" required>
+  <input type="datetime-local" name="idopont" autoComplete="off" required>
   <label for="tipus"><b>Tipus</b></label>
   <select name="tipus">
     <option value="1">Irasbeli</option>

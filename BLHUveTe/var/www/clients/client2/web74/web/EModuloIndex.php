@@ -38,6 +38,9 @@ $urancode = $_SESSION["uran_code"];
   <?php
 
   $condb = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
+  $sql = oci_parse($condb, "alter session set nls_date_format='DD-MM-YYYY HH24:MI'");
+oci_execute($sql);
+oci_free_statement($sql);
   $get_uzenet = oci_parse($condb, "SELECT \"uzenet\", \"datum\", \"o_urancode\" FROM \"Uzen\" WHERE \"h_urancode\" = '{$urancode}'");
   oci_execute($get_uzenet);
   

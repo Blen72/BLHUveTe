@@ -3,6 +3,10 @@ session_start();
 $urancode = $_SESSION["uran_code"];
 $conn = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
 
+  $sql = oci_parse($conn, "alter session set nls_date_format='DD-MM-YYYY HH24:MI'");
+oci_execute($sql);
+oci_free_statement($sql);
+
 $compiled = oci_parse($conn, "SELECT \"urancode\", \"nev\", \"jogosultsag\" FROM \"Oktato\"");
 oci_execute($compiled);
 

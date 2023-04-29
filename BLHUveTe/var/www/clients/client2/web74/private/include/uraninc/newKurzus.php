@@ -51,7 +51,7 @@ oci_close($condb);
   <label for="hossz"><b>Hossz</b></label>
   <input type="number" name="hossz" placeholder="Hossz" value="0" pattern="[0-9]" min="0" max="9999" autoComplete="off" required>
   <label for="kezdet"><b>Kezdet</b></label>
-  <input type="date" name="kezdet" placeholder="Max Letszam" autoComplete="off" required>
+  <input type="datetime-local" name="kezdet" placeholder="Max Letszam" autoComplete="off" required>
   <label for="max_letszam"><b>Max Letszam</b></label>
   <input type="number" name="max_letszam" placeholder="Max Letszam" value="0" pattern="[0-9]" min="0" max="9999" autoComplete="off" required>
   <label for="teremkod"><b>Teremkod</b></label>

@@ -7,7 +7,7 @@ $tipus=$_POST['tipus'];
 $ajanlott_felev=$_POST['ajanlott_felev'];
 $kredit=$_POST['kredit'];
 $hossz=$_POST['hossz'];
-$kezdet=date('d-m-Y', strtotime($_POST['kezdet']));    
+$kezdet=date('d-m-Y H:i', strtotime($_POST['kezdet']));    
 $max_letszam=$_POST['max_letszam'];
 $teremkod=$_POST['teremkod'];
 $get_kurzus = oci_parse($condb, "SELECT * FROM \"Kurzus\" WHERE \"kurzuskod\" = '{$kurzuskod}'");
@@ -20,7 +20,7 @@ if(isset($data[0])){
  	 echo("<script>window.location = '../../../../web74/web/UranIndex.php';</script>");
 }else{
 $conn = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
-$compiled = oci_parse($conn, "INSERT INTO \"Kurzus\" (\"kurzuskod\", \"nev\", \"kepzesId\", \"tipus\", \"ajanlott_felev\", \"kredit\", \"hossz\", \"kezdet\", \"max_letszam\", \"teremkod\") VALUES (:kurzuskod, :nev, :kepzesId, :tipus, :ajanlott_felev, :kredit, :hossz, to_date(:kezdet, 'DD-MM-YYYY'), :max_letszam, :teremkod)");
+$compiled = oci_parse($conn, "INSERT INTO \"Kurzus\" (\"kurzuskod\", \"nev\", \"kepzesId\", \"tipus\", \"ajanlott_felev\", \"kredit\", \"hossz\", \"kezdet\", \"max_letszam\", \"teremkod\") VALUES (:kurzuskod, :nev, :kepzesId, :tipus, :ajanlott_felev, :kredit, :hossz, to_date(:kezdet, 'DD-MM-YYYY HH24:MI'), :max_letszam, :teremkod)");
 oci_bind_by_name($compiled, ':kurzuskod', $kurzuskod);
 oci_bind_by_name($compiled, ':nev', $nev);
 oci_bind_by_name($compiled, ':kepzesId', $kepzesId);

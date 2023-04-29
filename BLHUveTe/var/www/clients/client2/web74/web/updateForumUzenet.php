@@ -2,12 +2,12 @@
 $uzenet=$_POST['uzenet'];
 $kurzuskod=$_POST['kurzuskod'];
 $urancode=$_POST['urancode'];
-$today=date('d-M-Y');
+$today=date('d-M-Y H:i');
 
 $final_uzenet = $kurzuskod."---".$uzenet;
 
 $conn = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
-$compiled = oci_parse($conn, "INSERT INTO \"Uzen\" (\"uzenet\", \"h_urancode\", \"o_urancode\", \"datum\") VALUES (:uzenet, :h_urancode, :o_urancode, to_date(:datum, 'DD-MM-YYYY'))");
+$compiled = oci_parse($conn, "INSERT INTO \"Uzen\" (\"uzenet\", \"h_urancode\", \"o_urancode\", \"datum\") VALUES (:uzenet, :h_urancode, :o_urancode, to_date(:datum, 'DD-MM-YYYY HH24:MI'))");
 oci_bind_by_name($compiled, ':uzenet', $final_uzenet);
 oci_bind_by_name($compiled, ':h_urancode', $urancode);
 oci_bind_by_name($compiled, ':o_urancode', $urancode);

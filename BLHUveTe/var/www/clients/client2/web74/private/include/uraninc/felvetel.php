@@ -1,5 +1,6 @@
 <?php
 session_start();
+$urancode = $_SESSION["uran_code"];
 $kurzuskod=$_GET['varname'];
 
 $conect = oci_connect('JAROSLAV', '1111', 'localhost/XE', 'AL32UTF8');
@@ -9,15 +10,27 @@ $sor = oci_fetch_array($get_elofeltetel);
 $adat = @$sor[0];
 oci_free_statement($get_elofeltetel);
 
-$get_adat = oci_parse($conect, "SELECT * FROM \"Hallgatoja\" WHERE \"kurzuskod\" = '{$adat}' AND \"erdemjegy\" < 2");
+if(strlen($adat) !== 0){
+$get_adat = oci_parse($conect, "SELECT * FROM \"Hallgatoja\" WHERE \"kurzuskod\" = '{$adat}' AND \"erdemjegy\" < 2 AND \"urancode\" ='{$urancode}'");
 oci_execute($get_adat);
 $data = oci_fetch_array($get_adat);
 oci_free_statement($get_adat);
-oci_close($conect);
 if(isset($data[0])){
      echo("<script>alert('Ezt a kurzust meg nem veheti fel mig a kovetkezo kurzust nem teljesiti : $adat!')</script>");
  	 echo("<script>window.location = '../../../../web74/web/UranIndex.php';</script>");
      return;
+}
+
+$get_stuff = oci_parse($conect, "SELECT * FROM \"Hallgatoja\" WHERE \"urancode\" ='{$urancode}' AND \"kurzuskod\" = '{$adat}'");
+oci_execute($get_stuff);
+$data = oci_fetch_array($get_stuff);
+oci_free_statement($get_stuff);
+oci_close($conect);
+if(!isset($data[0])){
+     echo("<script>alert('Ezt a kurzust meg nem veheti fel mig a kovetkezo kurzust nem teljesiti : $adat!')</script>");
+ 	 echo("<script>window.location = '../../../../web74/web/UranIndex.php';</script>");
+     return;
+}
 }
 
 $one = 1;//i know this is very dumb and im embarrassed

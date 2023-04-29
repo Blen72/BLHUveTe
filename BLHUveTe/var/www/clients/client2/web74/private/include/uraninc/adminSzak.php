@@ -39,6 +39,7 @@ oci_execute($compiled);
     <th style= "border: 3px solid black;text-align: left;">Szakkod</th>
     <th style= "border: 3px solid black;text-align: left;">Kurzuskod</th>
     <th style= "border: 3px solid black;text-align: left;">Kurzus neve</th>
+    <th style= "border: 3px solid black;text-align: left;">Kurzus torlese a szakrol</th>
   </tr>
   <?php
 while ($row = oci_fetch_array($compiled)) {
@@ -47,6 +48,8 @@ while ($row = oci_fetch_array($compiled)) {
         <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row[0]?></td>
         <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row[1]?></td>
         <td style= "border: 2px solid black;text-align: left;padding: 8px;"><?php echo $row[2]?></td>
+        <td style= "border: 2px solid black;text-align: left;padding: 8px;"><a href="../private/include/uraninc/delSzakokonvan.php?szakkod=<?php echo $row[0] ?>&kurzuskod=<?php echo $row[1]?>" onclick="return confirm('Biztosan torli a kovetkezo szakrol <?php echo $row[0]?> ezt a kurzust: <?php echo $row[2]?>?')"><button>Del</button></a></td>
+
     </tr>
     
     <?php
